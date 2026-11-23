@@ -120,7 +120,15 @@ async function handleMessage(api, event) {
     );
     return;
   }
-
+  if (/^جرائد(\s+(\d+|ايقاف|إيقاف))?$/.test(body)) {
+    if (!isAdmin(senderID)) return;
+    if (!isCommandEnabled('جرائد')) return;
+    const cmd = commands.get('جرائد');
+    if (cmd) cmd.execute(api, event).catch(e =>
+      console.error('[مستر] خطأ في جرائد:', e.message)
+    );
+    return;
+  }
   if (body.startsWith('يوت ')) {
     if (!isCommandEnabled('يوت')) return;
     const cmd = commands.get('يوت');
